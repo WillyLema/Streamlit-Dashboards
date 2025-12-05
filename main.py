@@ -15,12 +15,12 @@ st.set_page_config(
 col1, col2, col3 = st.columns([1, 4, 1])
 
 with col1:
-    st.image("left_logo.png", width=120)
+    st.image("Data files/Uber-logo.png", width=120)   # UPDATED LOGO PATH
 
 with col2:
     st.markdown(
         """
-        <h1 style='text-align: center;'>
+        <h1 style="text-align:center; margin-top:10px;">
             HBR - UBER Case Study Dashboard
         </h1>
         """,
@@ -28,9 +28,10 @@ with col2:
     )
 
 with col3:
-    st.image("right_logo.png", width=120)
+    st.image("Data files/rice-logo.jpg", width=120)   # UPDATED LOGO PATH
 
 st.write("---")
+
 
 # ---------------------------------------------------------
 # Tabs
@@ -46,16 +47,15 @@ with tab1:
 
     st.write(
         """
-        This tab contains general metadata related to the  
-        **HBR – UBER Case Study** dataset.
+        This section provides the general metadata for the  
+        **HBR – UBER Case Study Dataset**.
         """
     )
 
-    # Example metadata (replace with your own)
     metadata = {
         "Source": "HBR Case Study",
         "Date Retrieved": "2025-01-01",
-        "Observations": 10000,
+        "Observations": 10_000,
         "Variables": 12,
         "Description": "Dataset describing Uber ride patterns, fares, and operational factors."
     }
@@ -69,14 +69,13 @@ with tab1:
 with tab2:
     st.header("Data Dictionary")
 
-    # Example data dictionary (update with real fields)
     data_dict = pd.DataFrame({
         "Variable": ["trip_id", "driver_id", "timestamp", "distance", "fare"],
         "Type": ["string", "string", "datetime", "float", "float"],
         "Description": [
             "Unique identifier of the trip",
             "Unique identifier for the driver",
-            "Timestamp when the trip began",
+            "Timestamp marking the beginning of the trip",
             "Distance traveled (miles)",
             "Fare amount charged (USD)"
         ]
@@ -90,15 +89,16 @@ with tab2:
 # ---------------------------------------------------------
 with tab3:
     st.header("Visualizations")
+    st.write("Below are basic example visualizations using Streamlit components.")
 
-    st.write("Example simple visualization using Streamlit only:")
-
-    # Fake data (replace with your own DataFrame)
+    # Placeholder demo data
     sample_data = pd.DataFrame({
         "distance": [1, 2, 3, 4, 5],
         "fare": [5, 7, 9, 13, 17]
     })
 
+    st.subheader("Line Chart: Distance vs Fare")
     st.line_chart(sample_data.set_index("distance"))
 
+    st.subheader("Bar Chart: Distance vs Fare")
     st.bar_chart(sample_data.set_index("distance"))
