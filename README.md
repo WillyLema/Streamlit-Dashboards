@@ -65,6 +65,7 @@ http://localhost:8501
 ├── requirements.txt     # Python package requirements
 ├── data/                # Optional: dataset files
 └── README.md            # Project documentation
+└── Modules            # Project documentation
 ```
 
 ---
