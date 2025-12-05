@@ -1,9 +1,3 @@
-# Streamlit-Dashboards
-Below is a clean, ready-to-use **README.md** for a simple Streamlit dashboard.
-If you want it tailored to a specific project or dataset, just tell me!
-
----
-
 # Simple Streamlit Dashboard
 
 A lightweight and interactive dashboard built using **Streamlit**. This project demonstrates how to quickly create data-driven web apps in Python with minimal setup.
@@ -64,8 +58,9 @@ http://localhost:8501
 ├── app.py               # Main Streamlit application
 ├── requirements.txt     # Python package requirements
 ├── data/                # Optional: dataset files
+└── Modules/            # Project documentation
 └── README.md            # Project documentation
-└── Modules            # Project documentation
+
 ```
 
 ---
