@@ -1,104 +1,62 @@
-import streamlit as st
-import pandas as pd
-
-# ---------------------------------------------------------
-# Page configuration
-# ---------------------------------------------------------
-st.set_page_config(
-    page_title="HBR - UBER Case Study Dashboard",
-    layout="wide"
-)
-
-# ---------------------------------------------------------
-# Header with two logos and centered title
-# ---------------------------------------------------------
-col1, col2, col3 = st.columns([1, 4, 1])
-
-with col1:
-    st.image("Data files/Uber-logo.png", width=120)   # UPDATED LOGO PATH
-
-with col2:
-    st.markdown(
-        """
-        <h1 style="text-align:center; margin-top:10px;">
-            HBR - UBER Case Study Dashboard
-        </h1>
-        """,
-        unsafe_allow_html=True
-    )
-
-with col3:
-    st.image("Data files/rice-logo.jpg", width=120)   # UPDATED LOGO PATH
-
-st.write("---")
-
-
-# ---------------------------------------------------------
-# Tabs
-# ---------------------------------------------------------
-tab1, tab2, tab3 = st.tabs(["📄 Metadata", "📚 Data Dictionary", "📊 Visualizations"])
-
-
-# ---------------------------------------------------------
-# Tab 1 — Metadata
-# ---------------------------------------------------------
-with tab1:
-    st.header("Metadata")
-
-    st.write(
-        """
-        This section provides the general metadata for the  
-        **HBR – UBER Case Study Dataset**.
-        """
-    )
-
-    metadata = {
-        "Source": "HBR Case Study",
-        "Date Retrieved": "2025-01-01",
-        "Observations": 10_000,
-        "Variables": 12,
-        "Description": "Dataset describing Uber ride patterns, fares, and operational factors."
-    }
-
-    st.json(metadata)
-
-
-# ---------------------------------------------------------
-# Tab 2 — Data Dictionary
-# ---------------------------------------------------------
-with tab2:
-    st.header("Data Dictionary")
-
-    data_dict = pd.DataFrame({
-        "Variable": ["trip_id", "driver_id", "timestamp", "distance", "fare"],
-        "Type": ["string", "string", "datetime", "float", "float"],
-        "Description": [
-            "Unique identifier of the trip",
-            "Unique identifier for the driver",
-            "Timestamp marking the beginning of the trip",
-            "Distance traveled (miles)",
-            "Fare amount charged (USD)"
-        ]
-    })
-
-    st.dataframe(data_dict, use_container_width=True)
-
-
 # ---------------------------------------------------------
 # Tab 3 — Visualizations
 # ---------------------------------------------------------
 with tab3:
     st.header("Visualizations")
-    st.write("Below are basic example visualizations using Streamlit components.")
 
-    # Placeholder demo data
-    sample_data = pd.DataFrame({
-        "distance": [1, 2, 3, 4, 5],
-        "fare": [5, 7, 9, 13, 17]
+    # -------------------------
+    # Load your data (example)
+    # Replace this with your real Uber DF
+    # -------------------------
+    data = pd.DataFrame({
+        "Switchbacks": range(1, 51),       # Example column
+        "distance": [1, 2, 3, 4, 5] * 10,
+        "fare": [5, 7, 9, 13, 17] * 10
     })
 
-    st.subheader("Line Chart: Distance vs Fare")
-    st.line_chart(sample_data.set_index("distance"))
+    # Function you provided
+    def load_data(df):
+        display(df['Switchbacks'])
 
-    st.subheader("Bar Chart: Distance vs Fare")
-    st.bar_chart(sample_data.set_index("distance"))
+    # -------------------------
+    # Create 3 columns
+    # -------------------------
+    left_col, mid_col, right_col = st.columns([3, 3, 3])
+
+    # -------------------------
+    # LEFT COLUMN — Table + Slider Filter
+    # -------------------------
+    with left_col:
+        st.subheader("Data Table (Filtered)")
+
+        # Slider to choose row range
+        min_row, max_row = st.slider(
+            "Select row range:",
+            min_value=0,
+            max_value=len(data) - 1,
+            value=(0, 10),   # default range
+            step=1
+        )
+
+        # Filter dataframe
+        filtered_df = data.iloc[min_row:max_row + 1]
+
+        # Display using your function
+        load_data(filtered_df)
+
+        # Also render table for Streamlit clarity
+        st.dataframe(filtered_df, use_container_width=True)
+
+    # -------------------------
+    # MIDDLE COLUMN — Line Chart
+    # -------------------------
+    with mid_col:
+        st.subheader("Line Chart")
+        st.line_chart(filtered_df[['distance', 'fare']])
+
+    # -------------------------
+    # RIGHT COLUMN — Bar Chart
+    # -------------------------
+    with right_col:
+        st.subheader("Bar Chart")
+        st.bar_chart(filtered_df[['distance', 'fare']])
